@@ -46,12 +46,17 @@ namespace udp
         char buf[1024];
         while (true)
         {
-            int ret = recvfrom(sock, buf, sizeof(buf), 0, NULL, NULL);
+            struct sockaddr_in client_addr;
+            int len = sizeof(client_addr);
+            // int ret = recvfrom(sock, buf, sizeof(buf), 0, NULL, NULL);
+            int ret = recvfrom(sock, buf, sizeof(buf), 0, (sockaddr*)&client_addr, &len);
             if (ret == SOCKET_ERROR)
             {
                 std::cout << "recv error" << std::endl;
                 return;
             }
+            // std::cout << inet_ntoa(client_addr.sin_addr) << std::endl;
+            // std::cout << ntohs(client_addr.sin_port) << std::endl;
             std::cout << buf << std::endl;
         }
     }
